@@ -35,6 +35,7 @@ in {
       ty
       android-tools
       qbittorrent
+      lazygit
 
       # lutris
       protonup-ng
