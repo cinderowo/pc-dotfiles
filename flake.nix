@@ -18,11 +18,13 @@
       pkgs = nixpkgs.legacyPackages.${system};
     in {
       nixosConfigurations = {
-	      elaine = lib.nixosSystem {
+	      pc = lib.nixosSystem {
 	        inherit system;
 
 	        modules = [
 	          ./configuration.nix
+            ./modules/pc.nix
+	          
 	          home-manager.nixosModules.home-manager
             {
 	            home-manager = {
@@ -36,11 +38,25 @@
 	          stylix.nixosModules.stylix
 	        ];
 	      };
-	      iso = nixpkgs.lib.nixosSystem {
-	        system = "x86_64-linux";
+	      
+	      laptop = lib.nixosSystem {
+	        inherit system;
+
 	        modules = [
-	          (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
 	          ./configuration.nix
+	          ./modules/laptop.nix
+
+	          home-manager.nixosModules.home-manager
+	          {
+	            home-manager = {
+	              useGlobalPkgs = true;
+	              useUserPackages = true;
+	              users.elaine = ./hm/home.nix;
+	              extraSpecialArgs = { inherit inputs; };
+	            };
+	          }
+
+	          stylix.nixosModules.stylix
 	        ];
 	      };
       };

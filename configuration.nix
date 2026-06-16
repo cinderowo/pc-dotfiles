@@ -17,12 +17,12 @@
   boot.loader.grub.useOSProber = true;
   
 
-  networking.hostName = "nixos"; 
+  # networking.hostName = "nixos"; 
   networking.networkmanager.enable = true;
   # hopefully fix ethernet
-  boot.kernelModules = [ "r8168" ];
-  boot.blacklistedKernelModules = [ "r8169" ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.r8168 ];
+  # boot.kernelModules = [ "r8168" ];
+  # boot.blacklistedKernelModules = [ "r8169" ];
+  # boot.extraModulePackages = [ config.boot.kernelPackages.r8168 ];
 
   networking.firewall = rec {
     allowedTCPPortRanges = [ { from = 1714; to = 1764; } ];
@@ -49,15 +49,15 @@
 
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
-  services.xserver.enable = true;
-  services.xserver. windowManager.awesome = {
-    enable = true;
-    luaModules = with pkgs.luaPackages; [
-        luarocks # is the package manager for Lua modules
-        luadbi-mysql # Database abstraction layer
-        awesome-wm-widgets # Community collection of widgets
-    ];
-  };
+  # services.xserver.enable = true;
+  # services.xserver. windowManager.awesome = {
+  #   enable = true;
+  #   luaModules = with pkgs.luaPackages; [
+  #       luarocks # is the package manager for Lua modules
+  #       luadbi-mysql # Database abstraction layer
+  #       awesome-wm-widgets # Community collection of widgets
+  #   ];
+  # };
 
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
@@ -147,49 +147,7 @@
   environment.shells = with pkgs; [zsh];
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
-
-  specialisation = {
-
-    vm.configuration = {
-      # virtual machines, must switch monitor to motherboard port
-        programs.virt-manager.enable = true;
-        virtualisation.spiceUSBRedirection.enable = true;
-        virtualisation.libvirtd = {
-          enable = true;
-          qemu = {
-            package = pkgs.qemu_kvm;
-            runAsRoot = true;
-            swtpm.enable = true;
-          };
-        };
   
-      users.extraUsers.elaine.extraGroups = [ "libvirtd" ];
-      boot.initrd.kernelModules = [
-        "vfio_pci"
-        "vfio"
-        "vfio_iommu_type1"
-      ];
-      boot.kernelParams = [
-        "amd_iommu=on"
-        "vfio-pci.ids=1002:7550,1002:ab40"
-      ];
-    };
-  };
-
-  # my drivers HATE me :(
-  systemd.services.force-r8169 = {
-    description = "Force load r8169 Realtek Driver";
-    wantedBy = [ "multi-user.target" ];
-    before = [ "network-pre.target" ];
-    # Wants = [ "network-pre.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.kmod}/bin/modprobe r8169";
-      RemainAfterExit = true;
-    };
-  };
-
-
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.11"; # Did you read the comment?
 
