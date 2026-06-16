@@ -2,7 +2,7 @@
 {
 	imports = [
 		./hardware-configuration.nix
-	]
+	];
 		
 	networking.hostName = "elaines-x1";
 	
