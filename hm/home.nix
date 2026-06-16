@@ -23,7 +23,7 @@ in {
       gimp
       libreoffice-fresh
 
-      parted
+      # parted
       p7zip
       unzip
       dconf
