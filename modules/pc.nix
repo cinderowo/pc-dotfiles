@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 {
-  networking.hostName = "elaines-pc"
+  networking.hostName = "elaines-pc";
 
   # virtual machines
   specialisation = {
