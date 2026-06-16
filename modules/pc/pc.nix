@@ -1,5 +1,9 @@
 { config, pkgs, ... }:
 {
+  imports = [
+    ./hardware-configuration.nix
+  ]
+  
   networking.hostName = "elaines-pc";
 
   # virtual machines

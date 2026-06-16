@@ -23,7 +23,7 @@
 
 	        modules = [
 	          ./configuration.nix
-            ./modules/pc.nix
+            ./modules/pc/pc.nix
 	          
 	          home-manager.nixosModules.home-manager
             {
@@ -44,7 +44,7 @@
 
 	        modules = [
 	          ./configuration.nix
-	          ./modules/laptop.nix
+	          ./modules/laptop/laptop.nix
 
 	          home-manager.nixosModules.home-manager
 	          {
